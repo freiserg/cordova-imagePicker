@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
   xmlns:android="http://schemas.android.com/apk/res/android"
   id="cordova-plugin-image-picker"
-  version="1.0.8">
+  version="1.2.0">
 
 	<name>ImagePicker</name>
 	 
@@ -14,7 +14,9 @@
 
 	<engines>
 		<engine name="cordova" version=">=3.0.0" />
-	</engines>  
+	</engines>
+
+	<dependency id="cordova-plugin-compat" version="^1.0.0" />
 
 	<js-module src="www/imagepicker.js" name="ImagePicker">
 		<clobbers target="plugins.imagePicker" />
