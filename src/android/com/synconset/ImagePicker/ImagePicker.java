@@ -43,6 +43,19 @@ public class ImagePicker extends CordovaPlugin {
 			this.desiredHeight = 0;
 			this.quality = 100;
 
+			if (this.params.has("maximumImagesCount")) {
+				this.max = this.params.getInt("maximumImagesCount");
+			}
+			if (this.params.has("width")) {
+				this.desiredWidth = this.params.getInt("width");
+			}
+			if (this.params.has("height")) {
+				this.desiredWidth = this.params.getInt("height");
+			}
+			if (this.params.has("quality")) {
+				this.quality = this.params.getInt("quality");
+			}
+
 			if (PermissionHelper.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
 				 this.getImages();
 			} else {
@@ -69,19 +82,6 @@ public class ImagePicker extends CordovaPlugin {
 
 	public void getImages() {
 		Intent intent = new Intent(cordova.getActivity(), MultiImageChooserActivity.class);
-
-		if (this.params.has("maximumImagesCount")) {
-			this.max = this.params.getInt("maximumImagesCount");
-		}
-		if (this.params.has("width")) {
-			this.desiredWidth = this.params.getInt("width");
-		}
-		if (this.params.has("height")) {
-			this.desiredWidth = this.params.getInt("height");
-		}
-		if (this.params.has("quality")) {
-			this.quality = this.params.getInt("quality");
-		}
 
 		intent.putExtra("MAX_IMAGES", this.max);
 		intent.putExtra("WIDTH", this.desiredWidth);
