@@ -27,11 +27,22 @@ public class ImagePicker extends CordovaPlugin {
 	 
 	private CallbackContext callbackContext;
 	private JSONObject params;
-	 
+
+	private int max;
+	private int desiredWidth;
+	private int desiredHeight;
+	private int quality;
+
 	public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
 		 this.callbackContext = callbackContext;
 		 this.params = args.getJSONObject(0);
 		if (action.equals("getPictures")) {
+
+			this.max = 20;
+			this.desiredWidth = 0;
+			this.desiredHeight = 0;
+			this.quality = 100;
+
 			if (PermissionHelper.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
 				 this.getImages();
 			} else {
@@ -58,26 +69,25 @@ public class ImagePicker extends CordovaPlugin {
 
 	public void getImages() {
 		Intent intent = new Intent(cordova.getActivity(), MultiImageChooserActivity.class);
-		int max = 20;
-		int desiredWidth = 0;
-		int desiredHeight = 0;
-		int quality = 100;
+
 		if (this.params.has("maximumImagesCount")) {
-			max = this.params.getInt("maximumImagesCount");
+			this.max = this.params.getInt("maximumImagesCount");
 		}
 		if (this.params.has("width")) {
-			desiredWidth = this.params.getInt("width");
+			this.desiredWidth = this.params.getInt("width");
 		}
 		if (this.params.has("height")) {
-			desiredWidth = this.params.getInt("height");
+			this.desiredWidth = this.params.getInt("height");
 		}
 		if (this.params.has("quality")) {
-			quality = this.params.getInt("quality");
+			this.quality = this.params.getInt("quality");
 		}
-		intent.putExtra("MAX_IMAGES", max);
-		intent.putExtra("WIDTH", desiredWidth);
-		intent.putExtra("HEIGHT", desiredHeight);
-		intent.putExtra("QUALITY", quality);
+
+		intent.putExtra("MAX_IMAGES", this.max);
+		intent.putExtra("WIDTH", this.desiredWidth);
+		intent.putExtra("HEIGHT", this.desiredHeight);
+		intent.putExtra("QUALITY", this.quality);
+
 		if (this.cordova != null) {
 			this.cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
 		}
