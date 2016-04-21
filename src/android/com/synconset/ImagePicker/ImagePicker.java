@@ -106,7 +106,7 @@ public class ImagePicker extends CordovaPlugin {
 		}
 		switch(requestCode)
 		{
-			case 1:
+			case 0:
 				this.getImages();
 				break;
 			default:
