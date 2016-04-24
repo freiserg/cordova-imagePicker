@@ -49,10 +49,10 @@
     NSError* err = nil;
     NSFileManager* fileMgr = [[NSFileManager alloc] init];
     NSString* filePath;
-    ALAsset* asset = nil;
+    UIImage* image = nil;
     CGSize targetSize = CGSizeMake(self.width, self.height);
     for (NSDictionary *dict in info) {
-        asset = [dict objectForKey:UIImagePickerControllerOriginalImage];
+        image = [dict objectForKey:UIImagePickerControllerOriginalImage];
         // From ELCImagePickerController.m
         int i = 1;
         do {
@@ -61,9 +61,9 @@
 
         @autoreleasepool {
             if (self.width == 0 && self.height == 0) {
-                data = UIImageJPEGRepresentation(asset, self.quality/100.0f);
+                data = UIImageJPEGRepresentation(image, self.quality/100.0f);
             } else {
-                UIImage* scaledImage = [self imageByScalingNotCroppingForSize:asset toSize:targetSize];
+                UIImage* scaledImage = [self imageByScalingNotCroppingForSize:image toSize:targetSize];
                 data = UIImageJPEGRepresentation(scaledImage, self.quality/100.0f);
             }
 
