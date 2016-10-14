@@ -442,7 +442,11 @@ public class MultiImageChooserActivity extends Activity implements OnItemClickLi
             }
 
             ImageView imageView = (ImageView)convertView;
+            try {
             imageView.setImageBitmap(null);
+            } catch (OutOfMemoryError e) {
+                throw new IOException("Unable to load image into memory.");
+            }
 
             final int position = pos;
 
